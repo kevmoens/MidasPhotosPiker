@@ -263,7 +263,7 @@ namespace MidasPhotoPicker.Droid.Services
             try
             {
 
-                oImgCursor = CrossCurrentActivity.Current.Activity.ContentResolver.Query(oUri, null, null, null);
+                oImgCursor = CrossCurrentActivity.Current.Activity.ContentResolver.Query(oUri, null, null, null, null);
                 oImgCursor.MoveToFirst();
 
                 int iIndex = oImgCursor.GetColumnIndex(MediaStore.Images.ImageColumns.Data);
@@ -320,8 +320,11 @@ namespace MidasPhotoPicker.Droid.Services
             }
             finally
             {
-                oImgCursor.Close();
-                oImgCursor.Dispose();
+                try
+                {
+                    oImgCursor.Close();
+                    oImgCursor.Dispose();
+                } catch { }
             }
 
             return sPathUri;
